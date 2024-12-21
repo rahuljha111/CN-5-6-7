@@ -1,0 +1,26 @@
+Week7
+#include <stdio.h>
+#include <string.h>
+void shiftMessage(char *message, int shift, int encrypt) {
+    for (int i = 0; message[i] != '\0'; i++) {
+        char ch = message[i];
+        if (ch >= 'A' && ch <= 'Z') 
+            message[i] = (ch - 'A' + (encrypt ? shift : -shift + 26)) % 26 + 'A';
+        else if (ch >= 'a' && ch <= 'z') 
+            message[i] = (ch - 'a' + (encrypt ? shift : -shift + 26)) % 26 + 'a';
+    }
+}
+int main() {
+    char message[100];
+    int shift;
+    printf("Enter a message: ");
+    fgets(message, sizeof(message), stdin);
+    message[strcspn(message, "\n")] = 0;
+    printf("Enter shift value: ");
+    scanf("%d", &shift);
+    shiftMessage(message, shift, 1);
+    printf("Encrypted message: %s\n", message);
+    shiftMessage(message, shift, 0);
+    printf("Decrypted message: %s\n", message);
+    return 0;
+}
